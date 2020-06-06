@@ -16,8 +16,9 @@ songs = soup.select('#body-content > div.newest-list > div > table > tbody > tr'
 i = 0
 for song in songs:
     i = i + 1
+    song.select_one('td.number').span.decompose()
     rank = song.select_one('td.number')
     title = song.select_one('td.info > a.title.ellipsis')
     singer = song.select_one('td.info > a.artist.ellipsis')
 
-    print(rank.span.decompose(), title.text.strip(), singer.text)
+    print(rank.text.strip(), title.text.strip(), singer.text)
