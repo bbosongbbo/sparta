@@ -12,26 +12,26 @@ def home():
 
 # ## API 역할을 하는 부분
 @app.route('/shopping', methods=['GET'])
-def listing():
+def show_orders():
     #2) 주문내역보기(GET): 페이지 로딩 후 하단 주문 목록이 자동으로 보이기
     orders = list(db.orders.find({},{'_id':0}))
     return jsonify({'result':'success', 'orders': orders})
 
 @app.route('/shopping', methods=['POST'])
-def order():
+def make_orders():
     # 1) 주문하기(POST): 정보 입력 후 '주문하기' 버튼클릭 시 주문목록에 추가
     name_receive = request.form['name_give']
     quantity_receive = request.form['quantity_give']
     address_receive = request.form['address_give']
     phonenumber_receive = request.form['phonenumber_give']
     
-    order = {
+    doc = {
         'name': name_receive,
         'quantity': quantity_receive,
         'address': address_receive,
         'phonenumber': phonenumber_receive
     }
-    
+    db.orders.insert_one(doc)
     return jsonify({'result': 'success', 'msg':'주문이 완료되었습니다'})
 
 if __name__ == '__main__':

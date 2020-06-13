@@ -25,7 +25,7 @@
 
     <script>
 
-        function make_order() {
+        function make_orders() {
             let name = $('#name').val();
             let quantity = $('#quantity').val();
             let address = $('#address').val();
@@ -64,7 +64,7 @@
 
 
         $(document).ready(function () {
-            $('#orders-box').html(''); //테이블에 id 고치기
+            $('#orders-box').html('');
             show_orders();
         })
 
@@ -87,7 +87,7 @@
             })
         }
 
-        function add_order() {
+        function add_order(name, quantity, address, phonenumber) {
             let temp_html = `<tr>
                                 <td>${name}</th>
                                 <td>${quantity}</td>
@@ -257,7 +257,7 @@
         </div>
 
         <div class="section center">
-            <button type="button" class="btn btn-primary btn-lg" onclick="make_order()">주문하기</button>
+            <button type="button" class="btn btn-primary btn-lg" onclick="make_orders()">주문하기</button>
         </div>
 
         <div class="section">
