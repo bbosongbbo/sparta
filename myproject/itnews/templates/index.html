@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<!--
+	Phase Shift by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+
+<head>
+	<title>Daily IT/Digital News Monitoring</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.dropotron.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/skel.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/skel-layers.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/init.js') }}"></script>
+	<noscript>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/skel.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style-wide.css') }}" />
+	</noscript>
+	<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
+
+	<!-- Bootstrap CSS
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+
+	<!-- jquery import -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<!-- Datepicker -->
+	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/resources/demos/style.css"> -->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function () {
+			$("#datepicker").datepicker();
+		});
+	</script>
+
+
+	<script>
+		function crawling() {
+
+			// 1. date랑 category 가져오기
+			let date = $('#datepicker').val();
+			let category = $('#input[name=radio]:checked').val();
+
+			//2. 날짜 또는 카테고리 미선택 시 팝업 띄우기
+			if (date == '') {
+				alert('날짜를 선택해 주세요');
+				return;
+			} else if (category == '') {
+				alert('뉴스 카테고리를 선택해 주세요');
+				return;
+			}
+
+			// 3. /itnews 에 크롤링 요청하기
+			$.ajax({
+				type: "POST",
+				url: "/itnews",
+				data: { date_give: date, category_give: category },
+				success: function (response) {
+					if (response['result'] == 'success') {
+						window.location.reload();
+					}
+				}
+			})
+		}
+	</script>
+
+
+</head>
+
+<body>
+
+	<!-- Wrapper -->
+	<div class="wrapper style1">
+
+		<!-- Header -->
+		<div id="header" class="skel-panels-fixed">
+			<div id="logo">
+				<h1><a href="index.html">Daily IT/Digital News Monitoring</a></h1>
+			</div>
+		</div>
+
+		<!-- Banner -->
+		<div id="banner" class="container">
+			<section>
+				<p>
+					<input type="text" id="datepicker">
+				</p>
+				<p>
+					<input type="radio" name="radio" value="731">모바일
+					<input type="radio" name="radio" value="226">인터넷/SNS
+					<input type="radio" name="radio" value="227">통신/뉴미디어
+					<br>
+					<input type="radio" name="radio" value="230">IT 일반
+					<input type="radio" name="radio" value="732">보안/해킹
+					<input type="radio" name="radio" value="283">컴퓨터
+				</p>
+				<!-- <div>
+					<button type="button" class="btn btn-primary">Click!</button>
+				</div> -->
+				<div>
+					<button onclick="crawling()">Click!</button>
+				</div>
+			</section>
+		</div>
+
+		<!-- Extra -->
+		<div id="extra">
+			<div class="container">
+				<div class="row no-collapse-1">
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic01.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic02.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic03.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+				</div>
+				<div class="row no-collapse-1">
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic01.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic02.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic03.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+				</div>
+				<div class="row no-collapse-1">
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic01.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic02.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic03.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+				</div>
+				<div class="row no-collapse-1">
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic01.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic02.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic03.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+				</div>
+				<div class="row no-collapse-1">
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic01.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic02.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic03.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+				</div>
+				<div class="row no-collapse-1">
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic01.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic02.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+					<section class="4u"> <a href="#" class="image featured"><img src="images/pic03.jpg" alt=""></a>
+						<div class="box">
+							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
+								maecenas ligula.</p>
+							<a href="#" class="button">Read More</a>
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- Copyright -->
+	<div id="copyright">
+		<div class="container">
+			<div class="copyright">
+				<p>Design: <a href="http://templated.co">TEMPLATED</a> Images: <a
+						href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)</p>
+				<ul class="icons">
+					<li><a href="#" class="fa fa-facebook"><span>Facebook</span></a></li>
+					<li><a href="#" class="fa fa-twitter"><span>Twitter</span></a></li>
+					<li><a href="#" class="fa fa-google-plus"><span>Google+</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
