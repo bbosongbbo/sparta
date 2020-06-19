@@ -8,6 +8,14 @@ db = client.dbsparta                      # 'dbsparta'라는 이름의 db를 만
 import requests
 from bs4 import BeautifulSoup
 
+# from selenium import webdriver
+# from selenium.webdriver.common.keys import Keys
+
+# path = "C:\Users\bbosongyeon\Desktop\Develop\chromedriver_win32"
+# driver = webdriver.Chrome(path)
+# driver.get("http://www.facebook.org")
+
+
 ## HTML을 주는 부분
 @app.route('/')
 def home():
@@ -16,6 +24,9 @@ def home():
 ## API 역할을 하는 부분
 @app.route('/itnews', methods=['POST'])
 def crawling():
+
+    #0. 기존 DB 날리기??
+    db.itnews.drop()
 
     # 1. 클라이언트로부터 데이터를 받기
     date_receive = request.form['date_give']
@@ -36,26 +47,26 @@ def crawling():
     newslist = soup.select('#main_content > div.list_body.newsflash_body > ul.type06_headline > li')
 
     for news in newslist:
-        title = news.select-one('dl > dt:nth-child(2) > a').text
-        image = news.select-one('dl > dt.photo > a')
-        # 3줄요약은 아직 모르겠다
+        title = news.select_one('dl > dt:nth-child(2) > a').text
+        articleurl = news.select_one('dl > dt.photo > a')
+        image = news.select_one('dl > dt.photo > a > img')
 
-        dailynews = {
+        doc = {
             'title': title,
             'image': image,
-            #'3줄요약': 3줄요약
+            'articleurl' : articleurl
         }
 
-    # 3. mongoDB에 데이터 넣기
-    db.itnews.insert_one(dailynews)
-
-    return jsonify({'result': 'success'})
+        # 3. mongoDB에 데이터 넣기
+        db.itnews.insert_one(doc)
+        return jsonify({'result': 'success'})
 
 
 
 @app.route('/itnews', methods=['GET'])
 def show():
-    return jsonify({'result':'success', 'msg': '이 요청은 GET!'})
+    dailynews = list(db.itnews.find({},{'_id':False}))
+    return jsonify({'result':'success','all_dailynews': dailynews})
 
 
 if __name__ == '__main__':
