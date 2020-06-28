@@ -11,6 +11,10 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
+
+	<meta property="og:title" content="Daily IT/Digital News Monitoring" />
+	<meta property="og:description" content="오늘의 네이버 IT 뉴스를 살펴보아요" />
+	<meta property="og:image" content="{{ url_for('static', filename='ogimage.jpg') }}" />
 	<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/skel.css') }}" />
@@ -70,10 +74,10 @@
 			})
 		}
 
-		// $(document).ready(function () {
-		// 	$('#contents').html('');
-		// 	show();
-		// });
+		$(document).ready(function () {
+			$('#contents').html('');
+			show();
+		});
 
 		function show() {
 			$.ajax({
@@ -86,15 +90,17 @@
 						let dailynews = response['all_dailynews']
 
 						for (let i = 0; i < dailynews.length; i++) {
-							let dailynew = dailynew[i];
+							let dailynew = dailynews[i];
 							let title = dailynew['title'];
-							let articleurl = dailynew['articleurl']
-							let image = dailynew['image'];
+							let articleurl = dailynew['articleurl'];
+							let summary = dailynew['summary'];
+							// let image = dailynew['image'];
 
-							let temp_html = `<section class="4u"> <a href="#" class="image featured"><img src="${image}" alt=""></a>
+							let temp_html = `<section class="4u"> <a href="#" class="image featured"><img src="#" alt=""></a>
 												<div class="box">
 													<p>${title}</p>
-													<a href="${articleurl}" class="button">기사보기</a>
+													<p>${summary}</p>
+													<a href="${articleurl}" target="_blank" class="button">기사보기</a>
 												</div>
 											</section>`
 							$('#contents').append(temp_html);
@@ -103,6 +109,19 @@
 				}
 			})
 		}
+
+		// function db_delete() {
+		// 	$.ajax({
+		// 		type: "GET",
+		// 		url: "/itnews",
+		// 		data: {},
+		// 		success: function (response) {
+		// 			if (response['result'] == 'success') {
+		// 				window.location.reload();
+		// 			}
+		// 		}
+		// 	})
+		// }
 	</script>
 
 
@@ -136,7 +155,8 @@
 					<input type="radio" name="radio" value="283">컴퓨터
 				</p>
 				<div>
-					<button onclick="crawling()">Click!</button>
+					<button onclick="crawling()">검색</button>
+					<!-- <button onclick="db_delete()">초기화</button> -->
 				</div>
 			</section>
 		</div>
@@ -145,6 +165,7 @@
 		<div id="extra">
 			<!-- 3개씩 묶어야 예쁘게 보이는데 어떻게 tempHtml 만들지..? -->
 			<div class="container">
+
 				<div class="row no-collapse-1" id="contents">
 					<section class="4u"> <a href="#" class="image featured"><img
 								src="https://imgnews.pstatic.net/image/092/2020/06/18/0002191501_001_20200618122205029.jpg"
